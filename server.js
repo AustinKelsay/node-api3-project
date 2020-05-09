@@ -8,11 +8,11 @@ const port = 5000;
 //custom middleware
 
 server.use(logger);
-server.use(express.json)
+server.use(express.json())
 
 server.get("/", (req, res) => {
   res.json({
-    message: "Welcome!"
+  "message": "Welcome!"
   })
 });
 
