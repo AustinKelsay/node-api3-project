@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const db = require("./userDb");
+const posts = require("../posts/postDb");
 
 router.post('/', (req, res) => {
   const {name} = req.body
@@ -18,8 +19,8 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:id/posts', (req, res) => {
-  db
-  .insert(req.body)
+  posts
+    .insert({ text: req.body.text, user_id: req.params.id })
     .then((post) => res.status(201).json({ post }))
     .catch((err) => res.status(500).json({ message: err }));
 });
@@ -64,11 +65,17 @@ router.get('/:id/posts', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  db
+    .remove(req.params.id)
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(500).json({ message: err }));
 });
 
 router.put('/:id', (req, res) => {
-  // do your magic!
+  db
+    .update(req.params.id, req.body)
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(500).json({ message: err }));
 });
 
 //custom middleware
