@@ -5,11 +5,23 @@ const router = express.Router();
 const db = require("./userDb");
 
 router.post('/', (req, res) => {
-  // do your magic!
+  const {name} = req.body
+
+  db
+  .insert(req.body)
+  .then((user) => res.status(201).json({ message: "User created" }))
+  .catch((err) =>
+      res.status(500).json({
+        error: "There was an error while saving the user to the database",
+      })
+    );
 });
 
 router.post('/:id/posts', (req, res) => {
-  // do your magic!
+  db
+  .insert(req.body)
+    .then((post) => res.status(201).json({ post }))
+    .catch((err) => res.status(500).json({ message: err }));
 });
 
 router.get('/', (req, res) => {
@@ -26,11 +38,29 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
+  db
+  .getById(req.params.id)
+  .then((user) => {
+    res.status(200).json(user)
+  })
+  .catch((err) => {
+    res.status(500).json({
+      message: "Error retrieving user"
+    })
+  })
 });
 
 router.get('/:id/posts', (req, res) => {
-  // do your magic!
+  db
+  .getUserPosts(req.params.id)
+  .then((post) => {
+    res.status(200).json(post)
+  })
+  .catch((err) => {
+    res.status(500).json({
+      message: "Error retrieving post"
+    })
+  })
 });
 
 router.delete('/:id', (req, res) => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require("./users/userRouter")
+const postRouter = require("./posts/postRouter")
 const logger = require("./middleware/logger")
 
 const server = express();
@@ -9,6 +10,9 @@ const port = 5000;
 
 server.use(logger);
 server.use(express.json())
+
+server.use("/users", userRouter)
+server.use("/posts", postRouter)
 
 server.get("/", (req, res) => {
   res.json({
