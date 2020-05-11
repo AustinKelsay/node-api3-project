@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const posts = require("./postDb")
+const validatePostId = require("../middleware/validatePostId")
 
 router.get('/', (req, res) => {
   posts
@@ -30,24 +31,18 @@ router.get('/:id', (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validatePostId(), (req, res) => {
   posts
     .remove(req.params.id)
     .then((user) => res.status(200).json(user))
     .catch((err) => res.status(500).json({ message: err }));
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validatePostId(), (req, res) => {
   posts
     .update(req.params.id, req.body)
     .then((user) => res.status(200).json(user))
     .catch((err) => res.status(500).json({ message: err }));
 });
-
-// custom middleware
-
-function validatePostId(req, res, next) {
-  // do your magic!
-}
 
 module.exports = router;
