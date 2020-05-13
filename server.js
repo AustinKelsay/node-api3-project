@@ -8,7 +8,7 @@ const port = (process.env.PORT || 5000;
 
 //custom middleware
 
-server.use(logger);
+server.use(logger());
 server.use(express.json())
 
 server.use("/users", userRouter)
@@ -16,7 +16,7 @@ server.use("/posts", postRouter)
 
 server.get("/", (req, res) => {
   res.json({
-  "message": "Welcome!"
+  message: "Welcome!"
   })
 });
 
