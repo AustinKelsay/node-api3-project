@@ -4,7 +4,7 @@ const postRouter = require("./posts/postRouter")
 const logger = require("./middleware/logger")
 
 const server = express();
-const port = 5000;
+const port = (process.env.PORT || 5000;
 
 //custom middleware
 
